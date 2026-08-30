@@ -1,3 +1,4 @@
+// src/pages/Checkout.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineTicket } from "react-icons/hi";
@@ -7,7 +8,7 @@ import SuccessScreen from "../components/SuccessScreen";
 import EmptyState from "../components/EmptyState";
 import Button from "../components/Button";
 import { useCheckout } from "../hooks/useCheckout";
-import { generatePaymentReference } from "../utils/format";
+import { executeSecurePaymentFlow } from "../services/checkout"; // 👈 Import our core payment pipeline
 import type { CustomerInfo } from "../types";
 
 const Checkout = () => {
@@ -15,18 +16,35 @@ const Checkout = () => {
   const { selectedTicket, event, customer, setCustomer, paymentReference, setPaymentReference } =
     useCheckout();
   const [submitting, setSubmitting] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
-  const handleSubmit = (values: CustomerInfo) => {
+  const handleSubmit = async (values: CustomerInfo) => {
+    if (!selectedTicket) return;
+    
     setCustomer(values);
     setSubmitting(true);
+    setPaymentError(null);
 
-    // TODO(backend): Replace this simulated delay with a real Paystack
-    // checkout call. On success, store the returned reference instead of
-    // generating one locally, and verify it server-side before issuing a ticket.
-    window.setTimeout(() => {
-      setPaymentReference(generatePaymentReference());
-      setSubmitting(false);
-    }, 2200);
+    // Parse your backend database row identifier string into an absolute integer
+    // E.g. "ticket-db-5" becomes 5
+    const backendTicketTypeId = parseInt(selectedTicket.ticketId.replace(/^\D+/g, ""), 10) || 1;
+
+    // Trigger the multi-layered payment orchestration lifecycle
+    await executeSecurePaymentFlow({
+      email: values.email,
+      ticketTypeId: backendTicketTypeId,
+      quantity: selectedTicket.quantity,
+      
+      onSuccess: (orderHash) => {
+        setSubmitting(false);
+        // Save the verified order hash directly into your context memory layout
+        setPaymentReference(orderHash);
+      },
+      onFailure: (errorMessage) => {
+        setSubmitting(false);
+        setPaymentError(errorMessage);
+      }
+    });
   };
 
   if (!selectedTicket) {
@@ -67,6 +85,13 @@ const Checkout = () => {
     <div className="section-pad pt-32">
       <div className="container-x">
         <SectionTitle eyebrow="Checkout" title="Almost there" description="Enter your details to secure your spot." />
+        
+        {paymentError && (
+          <div className="mb-6 p-4 rounded-2xl border border-red-500/20 bg-red-500/5 text-xs font-medium text-red-400">
+            ⚠️ {paymentError}
+          </div>
+        )}
+
         <CheckoutForm ticket={selectedTicket} event={event} onSubmit={handleSubmit} submitting={submitting} />
       </div>
     </div>

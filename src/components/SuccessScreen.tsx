@@ -1,3 +1,4 @@
+// src/components/SuccessScreen.tsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
@@ -10,22 +11,16 @@ interface SuccessScreenProps {
   customer: CustomerInfo;
   ticket: SelectedTicket;
   event: EventItem;
-  reference: string;
+  reference: string; 
 }
 
 const SuccessScreen = ({ customer, ticket, event, reference }: SuccessScreenProps) => {
   const total = ticket.price * ticket.quantity;
-  const qrPayload = JSON.stringify({
-    ref: reference,
-    event: event.title,
-    tier: ticket.tier,
-    qty: ticket.quantity,
-    name: customer.fullName,
-  });
+
+  // SECURE CONTEXT FIX: 
+  const secureQrUrlPayload = `https://chillandvibes.com{reference}`;
 
   const handleDownload = () => {
-    // TODO(backend): once real tickets exist, generate a signed PDF/QR
-    // server-side. For now we export the on-screen QR as a PNG.
     const svg = document.getElementById("ticket-qr");
     if (!svg) return;
     const serializer = new XMLSerializer();
@@ -107,7 +102,8 @@ const SuccessScreen = ({ customer, ticket, event, reference }: SuccessScreenProp
 
           <div className="flex flex-col items-center justify-center gap-3 p-7 sm:p-8">
             <div className="rounded-2xl bg-white p-3">
-              <QRCodeSVG id="ticket-qr" value={qrPayload} size={128} bgColor="#ffffff" fgColor="#07070A" />
+              {/* value parameter targets secure URL variable path now */}
+              <QRCodeSVG id="ticket-qr" value={secureQrUrlPayload} size={128} bgColor="#ffffff" fgColor="#07070A" />
             </div>
             <p className="text-center text-[11px] text-mute">Scan at the entrance</p>
           </div>

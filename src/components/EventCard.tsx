@@ -19,21 +19,34 @@ const EventCard = ({ event, index = 0 }: EventCardProps) => {
       className="glass glass-hover group flex flex-col overflow-hidden rounded-3xl sm:flex-row"
     >
       <div className="relative h-56 w-full shrink-0 overflow-hidden sm:h-auto sm:w-64">
-        <img
-          src={event.flyer}
-          alt={`${event.title} flyer`}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
+
+        {event.flyer ? (
+          <img
+            src={event.flyer}
+            alt={`${event.title} flyer`}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-ink-900">
+            <span className="text-xs uppercase tracking-widest text-mute">
+              Event Flyer
+            </span>
+          </div>
+        )}
+
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent sm:bg-gradient-to-r" />
+
         <span className="absolute left-4 top-4 rounded-full bg-ink/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-gold-light backdrop-blur-md">
           {event.category}
         </span>
+
         {!event.ticketsAvailable && (
           <span className="absolute right-4 top-4 rounded-full bg-ink/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-mute backdrop-blur-md">
             Sold Out
           </span>
         )}
+
       </div>
 
       <div className="flex flex-1 flex-col justify-between gap-5 p-6 sm:p-7">

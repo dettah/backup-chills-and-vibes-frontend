@@ -68,7 +68,7 @@ const Navbar = () => {
         </ul>
 
         <div className="hidden lg:block">
-          <Link to="/tickets" className="btn-gold !px-6 !py-2.5 text-xs">
+          <Link to="/events" className="btn-gold !px-6 !py-2.5 text-xs">
             Buy Ticket
           </Link>
         </div>
@@ -119,7 +119,7 @@ const Navbar = () => {
                 transition={{ delay: navLinks.length * 0.05 }}
                 className="mt-2"
               >
-                <Link to="/tickets" className="btn-gold w-full">
+                <Link to="/events" className="btn-gold w-full">
                   Buy Ticket
                 </Link>
               </motion.li>
