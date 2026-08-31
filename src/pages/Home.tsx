@@ -1,26 +1,26 @@
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   HiOutlineCalendar,
   HiOutlineLocationMarker,
   HiOutlineTicket,
-  HiOutlineSparkles,
+  // HiOutlineSparkles,
   HiOutlineArrowRight,
 } from "react-icons/hi";
 
 import Hero from "../components/Hero";
 import SectionTitle from "../components/SectionTitle";
 import EventCard from "../components/EventCard";
-import Gallery from "../components/Gallery";
-import Button from "../components/Button";
+// import Gallery from "../components/Gallery";
+// import Button from "../components/Button";
 
 import { events } from "../data/events";
-import { galleryImages } from "../data/gallery";
+// import { galleryImages } from "../data/gallery";
 
 
 const Home = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const featuredEvent = events[0];
 

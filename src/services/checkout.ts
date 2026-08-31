@@ -66,7 +66,7 @@ export const executeSecurePaymentFlow = async (
       email: gateway.email,
       amount: gateway.amount,
       currency: gateway.currency,
-      reference: gateway.reference,
+      ref: gateway.reference,
 
       metadata: gateway.metadata,
 
@@ -76,7 +76,12 @@ export const executeSecurePaymentFlow = async (
       // It asks Django to verify the transaction with Paystack.
       // ==========================================================
 
-      onSuccess: async (transaction) => {
+      onSuccess: async (
+        transaction: {
+          reference: string;
+          status: string;
+        }
+      ) => {
         try {
           console.log(
             "Paystack callback received:",
@@ -92,7 +97,7 @@ export const executeSecurePaymentFlow = async (
           } else {
             options.onFailure(
               verification.message ||
-                "Payment could not be verified."
+              "Payment could not be verified."
             );
           }
         } catch (error: any) {
@@ -103,7 +108,7 @@ export const executeSecurePaymentFlow = async (
 
           options.onFailure(
             error.response?.data?.error ||
-              "Payment was received but could not be verified yet."
+            "Payment was received but could not be verified yet."
           );
         }
       },
@@ -114,12 +119,12 @@ export const executeSecurePaymentFlow = async (
         );
       },
 
-      onError: (error) => {
+      onError: (error: unknown) => {
         console.error("Paystack error:", error);
 
         options.onFailure(
-          error?.message ||
-            "Paystack could not process the transaction."
+          (error as any)?.message ||
+          "Paystack could not process the transaction."
         );
       },
     });
@@ -135,3 +140,5 @@ export const executeSecurePaymentFlow = async (
     options.onFailure(errorMsg);
   }
 };
+
+

@@ -10,6 +10,7 @@ import Button from "../components/Button";
 import { useCheckout } from "../hooks/useCheckout";
 import { executeSecurePaymentFlow } from "../services/checkout"; // 👈 Import our core payment pipeline
 import type { CustomerInfo } from "../types";
+import { featuredEvent } from "../data/events";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ const Checkout = () => {
           <SuccessScreen
             customer={customer}
             ticket={selectedTicket}
-            event={event}
+            event={event ?? featuredEvent}
             reference={paymentReference}
           />
         </div>
@@ -92,7 +93,7 @@ const Checkout = () => {
           </div>
         )}
 
-        <CheckoutForm ticket={selectedTicket} event={event} onSubmit={handleSubmit} submitting={submitting} />
+        <CheckoutForm ticket={selectedTicket} event={event ?? featuredEvent} onSubmit={handleSubmit} submitting={submitting} />
       </div>
     </div>
   );

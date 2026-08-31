@@ -69,13 +69,39 @@ export interface GalleryBackendResponse {
   src: string;
   caption: string;
   span?: "tall" | "wide" | "normal";
+
+}
+
+export interface GateScanResponse {
+  status: "APPROVED" | "REJECTED";
+  message?: string;
+  error?: string;
+  scanned_at?: string;
 }
 
 export const ticketApi = {
 
+
+    // ============================================================
+  // TICKET GATE SCANNER
+  // ============================================================
+  scanTicket: async (
+    ticketHash: string
+  ): Promise<GateScanResponse> => {
+    const response = await api.post<GateScanResponse>(
+      "/tickets/gate-scan/",
+      {
+        ticket_hash: ticketHash,
+      }
+    );
+
+    return response.data;
+  },
+
   // ============================================================
   // EVENTS
   // ============================================================
+  
 
   fetchLiveEvents: async (): Promise<EventItem[]> => {
     const response = await api.get<EventItem[]>("/events/");

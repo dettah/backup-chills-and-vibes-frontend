@@ -10,7 +10,7 @@ import {
   AnimatePresence,
   motion,
 } from "framer-motion";
-
+import Scanner from "./pages/Scanner";
 import MainLayout from "./layouts/MainLayout";
 import { CheckoutProvider } from "./hooks/useCheckout";
 import { initializeLiveEventData } from "./data/events";
@@ -147,6 +147,16 @@ const AnimatedRoutes = () => {
           />
 
         </Route>
+
+          {/* =====================================================
+              Scanner page
+              ===================================================== */}
+
+        <Route
+          path="/scanner"
+          element={<Scanner />}
+        />
+
 
       </Routes>
 

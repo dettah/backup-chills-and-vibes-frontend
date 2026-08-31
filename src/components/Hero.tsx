@@ -16,8 +16,8 @@ const Hero = () => {
       {/* Background image with zoom + parallax */}
       <motion.div style={{ y, scale }} className="absolute inset-0 -z-20">
         <img
-          src={featuredEvent.flyer}
-          alt="Jersey Party event flyer"
+          src={featuredEvent.flyer ?? undefined}
+          alt={featuredEvent.title}
           className="h-full w-full object-cover object-top"
         />
       </motion.div>
