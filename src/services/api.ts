@@ -64,6 +64,19 @@ export interface OrderLookupResponse {
   created_at: string;
 }
 
+export interface GuestTicket {
+  ticket_hash: string;
+  status: "VALID" | "SCANNED" | "CANCELLED";
+  ticket_type: string;
+  price: string;
+}
+
+export interface GuestOrderTicketsResponse {
+  order_hash: string;
+  customer_email: string;
+  tickets: GuestTicket[];
+}
+
 export interface GalleryBackendResponse {
   id: string | number;
   src: string;
@@ -82,7 +95,7 @@ export interface GateScanResponse {
 export const ticketApi = {
 
 
-    // ============================================================
+  // ============================================================
   // TICKET GATE SCANNER
   // ============================================================
   scanTicket: async (
@@ -101,7 +114,7 @@ export const ticketApi = {
   // ============================================================
   // EVENTS
   // ============================================================
-  
+
 
   fetchLiveEvents: async (): Promise<EventItem[]> => {
     const response = await api.get<EventItem[]>("/events/");
@@ -187,6 +200,24 @@ export const ticketApi = {
     const response =
       await api.get<OrderLookupResponse>(
         "/orders/lookup/",
+        {
+          params: {
+            order_hash: orderHash,
+            email,
+          },
+        }
+      );
+
+    return response.data;
+  },
+
+  fetchOrderTickets: async (
+    orderHash: string,
+    email: string
+  ): Promise<GuestOrderTicketsResponse> => {
+    const response =
+      await api.get<GuestOrderTicketsResponse>(
+        "/orders/tickets/",
         {
           params: {
             order_hash: orderHash,

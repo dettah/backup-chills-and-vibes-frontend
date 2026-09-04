@@ -31,8 +31,8 @@ type ScanState =
   | "error";
 
 
-const SCANNER_ELEMENT_ID =
-  "chills-vibes-qr-reader";
+// const SCANNER_ELEMENT_ID =
+  // "chills-vibes-qr-reader";
 
 
 const Scanner = () => {

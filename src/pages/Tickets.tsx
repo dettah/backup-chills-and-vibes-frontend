@@ -26,8 +26,20 @@ const Tickets = () => {
   const {
     selectedTicket,
     setSelectedTicket,
+    reset,
   } = useCheckout();
 
+  useEffect(() => {
+    /*
+     * Entering the ticket-selection page starts a
+     * completely new purchase session.
+     *
+     * CheckoutProvider survives route changes, so
+     * the previous paymentReference would otherwise
+     * remain in memory.
+     */
+    reset();
+  }, [eventId, reset]);
 
   const [ticketOptions, setTicketOptions] =
     useState<TicketOption[]>([]);
@@ -171,37 +183,32 @@ const Tickets = () => {
   const handleSelect = (
     ticketId: string
   ) => {
-
     const ticket =
       ticketOptions.find(
         (item) =>
           item.id === ticketId
       );
 
-
     if (!ticket) {
       return;
     }
 
+    /*
+     * Selecting a ticket begins a new checkout attempt.
+     * Clear any state left behind by an earlier payment.
+     */
+    reset();
 
     const next: SelectedTicket = {
-
       eventId: Number(eventId),
-
       ticketId: ticket.id,
-
       tier: ticket.tier,
-
       price: ticket.price,
-
       quantity:
         quantities[ticketId] ?? 1,
-
     };
 
-
     setSelectedTicket(next);
-
   };
 
 
@@ -324,7 +331,7 @@ const Tickets = () => {
 
                   quantity={
                     quantities[
-                      ticket.id
+                    ticket.id
                     ] ?? 1
                   }
 

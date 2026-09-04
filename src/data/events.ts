@@ -3,6 +3,16 @@ import type { EventItem } from "../types";
 
 import jerseyFlyer from "../assets/images/jersey-hero.jpg";
 
+/*
+ * ============================================================
+ * FALLBACK EVENT
+ * ============================================================
+ *
+ * This event is ONLY used when Django successfully responds
+ * and confirms that there are currently zero events.
+ *
+ * It is NOT used when the API request fails.
+ */
 const fallbackEvents: EventItem[] = [
   {
     id: "fallback-1",
@@ -23,52 +33,133 @@ const fallbackEvents: EventItem[] = [
   },
 ];
 
-/**
- * Current event collection used by the frontend.
+/*
+ * ============================================================
+ * LIVE EVENT COLLECTION
+ * ============================================================
+ *
+ * Start EMPTY.
+ *
+ * We do not assume a fallback event exists.
  */
-export let events: EventItem[] = [...fallbackEvents];
+export let events: EventItem[] = [];
 
-/**
- * Featured event used by the Home page and Checkout context.
+/*
+ * Featured event.
+ *
+ * This remains null until the backend has been checked.
  */
-export let featuredEvent: EventItem = events[0];
+export let featuredEvent: EventItem | null = null;
 
-/**
- * Loads events from Django.
+/*
+ * ============================================================
+ * LOAD EVENTS FROM DJANGO
+ * ============================================================
  */
-export const initializeLiveEventData = async (): Promise<EventItem[]> => {
-  try {
-    const liveData = await ticketApi.fetchLiveEvents();
+export const initializeLiveEventData =
+  async (): Promise<EventItem[]> => {
+    try {
+      console.log(
+        "Fetching live events from Django..."
+      );
 
-    if (Array.isArray(liveData) && liveData.length > 0) {
-      events = liveData.map((event) => ({
-        ...event,
-        id: String(event.id),
-      }));
+      const liveData =
+        await ticketApi.fetchLiveEvents();
 
-      featuredEvent = events[0];
-    } else {
-      events = [...fallbackEvents];
-      featuredEvent = events[0];
+      console.log(
+        "Django returned events:",
+        liveData
+      );
+
+      /*
+       * ========================================================
+       * CASE 1:
+       * Django returned one or more real events.
+       * ========================================================
+       *
+       * These ALWAYS take priority over the fallback.
+       */
+      if (
+        Array.isArray(liveData) &&
+        liveData.length > 0
+      ) {
+        events = liveData.map(
+          (event) => ({
+            ...event,
+            id: String(event.id),
+          })
+        );
+
+        featuredEvent =
+          events[0] ?? null;
+
+        console.log(
+          "Using live database events:",
+          events
+        );
+
+        return events;
+      }
+
+      /*
+       * ========================================================
+       * CASE 2:
+       * Django successfully responded but there are
+       * genuinely no events.
+       * ========================================================
+       *
+       * ONLY here do we use the fallback event.
+       */
+      console.warn(
+        "Django returned zero events. Using fallback event."
+      );
+
+      events = [
+        ...fallbackEvents,
+      ];
+
+      featuredEvent =
+        events[0] ?? null;
+
+      return events;
+
+    } catch (error) {
+
+      /*
+       * ========================================================
+       * CASE 3:
+       * Django/API request failed.
+       * ========================================================
+       *
+       * IMPORTANT:
+       *
+       * We DO NOT use the fallback here.
+       *
+       * A failed API request does not mean the database
+       * contains zero events.
+       */
+      console.error(
+        "Failed to load events from Django:",
+        error
+      );
+
+      events = [];
+      featuredEvent = null;
+
+      return [];
     }
-  } catch (error) {
-    console.warn(
-      "Backend API unreachable. Falling back to static events:",
-      error
-    );
+  };
 
-    events = [...fallbackEvents];
-    featuredEvent = events[0];
-  }
 
-  return events;
-};
-
-/**
- * Finds an event using its slug.
+/*
+ * ============================================================
+ * FIND EVENT BY SLUG
+ * ============================================================
  */
 export const getEventBySlug = (
   slug: string
 ): EventItem | undefined => {
-  return events.find((event) => event.slug === slug);
+  return events.find(
+    (event) => event.slug === slug
+  );
 };

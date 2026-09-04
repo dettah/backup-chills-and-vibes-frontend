@@ -1,3 +1,4 @@
+// Chills-Vibes/pages/Home.tsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 

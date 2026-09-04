@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useMemo,
   useState,
@@ -83,24 +84,27 @@ export const CheckoutProvider = ({
     useState<string | null>(null);
 
 
-  const setEvent = (
-    nextEvent: EventItem
-  ) => {
-    setEventState(nextEvent);
+  const setEvent = useCallback(
+    (
+      nextEvent: EventItem
+    ) => {
+      setEventState(nextEvent);
 
-    // Don't accidentally carry a ticket
-    // from another event.
+      // Changing the event starts a completely
+      // fresh purchase flow.
+      setSelectedTicket(null);
+      setCustomer(emptyCustomer);
+      setPaymentReference(null);
+    },
+    []
+  );
+
+
+  const reset = useCallback(() => {
     setSelectedTicket(null);
-  };
-
-
-  const reset = () => {
-    setSelectedTicket(null);
-
     setCustomer(emptyCustomer);
-
     setPaymentReference(null);
-  };
+  }, []);
 
 
   const value = useMemo(
@@ -128,6 +132,8 @@ export const CheckoutProvider = ({
       event,
       customer,
       paymentReference,
+      setEvent,
+      reset,
     ]
   );
 
