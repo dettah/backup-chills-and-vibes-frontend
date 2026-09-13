@@ -37,16 +37,11 @@ export interface CheckoutResponse {
   total_price: string;
 
   gateway_config: {
-    email: string;
+    payment_reference: string;
+    transaction_reference: string;
+    checkout_url: string;
     amount: number;
     currency: string;
-    reference: string;
-    callback_url: string;
-
-    metadata: {
-      order_id: number;
-      system_source: string;
-    };
   };
 }
 
@@ -181,14 +176,15 @@ export const ticketApi = {
     return response.data;
   },
   verifyPayment: async (
-    reference: string
+    paymentReference: string
   ): Promise<VerifyPaymentResponse> => {
-    const response = await api.post<VerifyPaymentResponse>(
-      "/orders/verify-payment/",
-      {
-        reference,
-      }
-    );
+    const response =
+      await api.post<VerifyPaymentResponse>(
+        "/orders/verify-payment/",
+        {
+          payment_reference: paymentReference,
+        }
+      );
 
     return response.data;
   },

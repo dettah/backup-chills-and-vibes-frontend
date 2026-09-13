@@ -120,7 +120,7 @@ const CheckoutForm = ({ ticket, event, onSubmit, submitting }: CheckoutFormProps
         </Button>
 
         <p className="flex items-center justify-center gap-1.5 text-xs text-mute">
-          <HiOutlineLockClosed className="text-gold" /> Secure payment powered by Paystack.
+          <HiOutlineLockClosed className="text-gold" /> Secure payment powered by Monnify.
         </p>
       </form>
 
