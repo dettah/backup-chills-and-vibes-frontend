@@ -544,16 +544,20 @@ const Checkout = () => {
      */
 
     await executeSecurePaymentFlow({
-
       email:
         values.email,
+
+      customerName:
+        values.fullName,
+
+      customerPhone:
+        values.phone,
 
       ticketTypeId:
         backendTicketTypeId,
 
       quantity:
         selectedTicket.quantity,
-
       /*
        * The hosted Monnify flow redirects away from
        * this page, so onSuccess is not normally reached

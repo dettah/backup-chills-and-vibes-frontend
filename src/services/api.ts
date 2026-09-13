@@ -28,6 +28,8 @@ export interface ReserveResponse {
 
 export interface CheckoutRequest {
   email: string;
+  customer_name: string;
+  customer_phone: string;
   hold_ids: number[];
   callback_url?: string;
 }

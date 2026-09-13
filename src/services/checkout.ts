@@ -2,6 +2,8 @@ import { ticketApi } from "./api";
 
 interface PaymentProcessOptions {
   email: string;
+  customerName: string;
+  customerPhone: string;
   ticketTypeId: number;
   quantity: number;
 
@@ -54,6 +56,8 @@ export const executeSecurePaymentFlow =
       const checkoutData =
         await ticketApi.initializeCheckout({
           email: options.email,
+          customer_name: options.customerName,
+          customer_phone: options.customerPhone,
           hold_ids: [
             holdData.hold_id,
           ],
@@ -98,7 +102,7 @@ export const executeSecurePaymentFlow =
       );
 
     } catch (
-      error: any
+    error: any
     ) {
 
       console.error(
@@ -123,4 +127,4 @@ export const executeSecurePaymentFlow =
   };
 
 
-  // 
+// 
