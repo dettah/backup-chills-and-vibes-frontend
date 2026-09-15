@@ -13,11 +13,11 @@ import {
 import Hero from "../components/Hero";
 import SectionTitle from "../components/SectionTitle";
 import EventCard from "../components/EventCard";
-// import Gallery from "../components/Gallery";
+import Gallery from "../components/Gallery";
 // import Button from "../components/Button";
 
 import { events } from "../data/events";
-// import { galleryImages } from "../data/gallery";
+import { galleryImages } from "../data/gallery";
 
 
 const Home = () => {
@@ -173,8 +173,18 @@ const Home = () => {
       </section>
 
 
-      {/* Keep your existing Gallery section here */}
-
+     
+{/* Photo Gallery */}
+      <section className="container-page py-16">
+        <SectionTitle
+          eyebrow="Relive The Energy"
+          title="Moments From Our Parties"
+          description="A look back at the nights that made Chills & Vibes what it is."
+        />
+        <div className="mt-10">
+          <Gallery images={galleryImages} />
+        </div>
+      </section>
 
       <section className="section-pad">
 
