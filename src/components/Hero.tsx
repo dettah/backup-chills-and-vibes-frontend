@@ -4,6 +4,8 @@ import {
   useTransform,
 } from "framer-motion";
 
+import jerseyFlyer from "../assets/images/jersey-hero.jpg"
+
 import {
   useRef,
 } from "react";
@@ -126,13 +128,16 @@ const Hero = () => {
 
         <img
           src={
-            featuredEvent.flyer ??
-            undefined
+            featuredEvent.flyer ||
+            jerseyFlyer
           }
           alt={
             featuredEvent.title
           }
           className="h-full w-full object-cover object-top"
+          onError={(event) => {
+            event.currentTarget.src = jerseyFlyer;
+          }}
         />
 
       </motion.div>
@@ -214,9 +219,9 @@ const Hero = () => {
 
 
 
-<span className="bg-gradient-to-r from-white to-gold bg-clip-text text-transparent">
-  {featuredEvent.title}
-</span>
+          <span className="bg-gradient-to-r from-white to-gold bg-clip-text text-transparent">
+            {featuredEvent.title}
+          </span>
 
 
 

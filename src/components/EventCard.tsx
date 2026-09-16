@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { HiOutlineCalendar, HiOutlineClock, HiOutlineLocationMarker, HiOutlineArrowRight } from "react-icons/hi";
 import type { EventItem } from "../types";
-
+import jerseyFlyer from "../assets/images/jersey-hero.jpg";
 interface EventCardProps {
   event: EventItem;
   index?: number;
@@ -20,20 +20,15 @@ const EventCard = ({ event, index = 0 }: EventCardProps) => {
     >
       <div className="relative h-56 w-full shrink-0 overflow-hidden sm:h-auto sm:w-64">
 
-        {event.flyer ? (
-          <img
-            src={event.flyer}
-            alt={`${event.title} flyer`}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-ink-900">
-            <span className="text-xs uppercase tracking-widest text-mute">
-              Event Flyer
-            </span>
-          </div>
-        )}
+        <img
+          src={event.flyer || jerseyFlyer}
+          alt={`${event.title} flyer`}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          onError={(e) => {
+            e.currentTarget.src = jerseyFlyer;
+          }}
+        />
 
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent sm:bg-gradient-to-r" />
 

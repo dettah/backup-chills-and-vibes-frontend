@@ -24,6 +24,7 @@ export interface EventItem {
   priceFrom: string;
 
   ticketsAvailable: boolean;
+  is_featured: boolean;
 }
 
 

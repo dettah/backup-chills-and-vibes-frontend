@@ -9,7 +9,7 @@ import jerseyFlyer from "../assets/images/jersey-hero.jpg";
  * ============================================================
  *
  * This event is ONLY used when Django successfully responds
- * and confirms that there are currently zero events.
+ * and confirmhttps://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1600&auto=format&fit=crops that there are currently zero events.
  *
  * It is NOT used when the API request fails.
  */
@@ -30,6 +30,7 @@ const fallbackEvents: EventItem[] = [
     flyer: jerseyFlyer,
     priceFrom: "₦4,000",
     ticketsAvailable: true,
+    is_featured: true,
   },
 ];
 
@@ -73,7 +74,7 @@ export const initializeLiveEventData =
 
       /*
        * ========================================================
-       * CASE 1:
+       * :
        * Django returned one or more real events.
        * ========================================================
        *
@@ -91,7 +92,11 @@ export const initializeLiveEventData =
         );
 
         featuredEvent =
-          events[0] ?? null;
+          events.find(
+            (event) => event.is_featured
+          ) ??
+          events[0] ??
+          null;
 
         console.log(
           "Using live database events:",
@@ -103,12 +108,12 @@ export const initializeLiveEventData =
 
       /*
        * ========================================================
-       * CASE 2:
+       * 
        * Django successfully responded but there are
        * genuinely no events.
        * ========================================================
        *
-       * ONLY here do we use the fallback event.
+       * use the fallback event.
        */
       console.warn(
         "Django returned zero events. Using fallback event."
