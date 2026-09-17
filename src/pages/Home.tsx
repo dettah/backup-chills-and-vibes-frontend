@@ -175,7 +175,7 @@ const Home = () => {
 
      
 {/* Photo Gallery */}
-      <section className="container-page py-16">
+      <section className="container-page section-pad py-16">
         <SectionTitle
           eyebrow="Relive The Energy"
           title="Moments From Our Parties"
@@ -229,7 +229,7 @@ const Home = () => {
       </section>
 
 
-      {/* Keep your existing CTA banner here */}
+      {/* I will have to bring back the CTA banner */}
     </>
   );
 };
