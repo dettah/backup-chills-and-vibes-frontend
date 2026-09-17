@@ -173,19 +173,21 @@ const Home = () => {
       </section>
 
 
-     
-{/* Photo Gallery */}
-      <section className="container-page section-pad py-16">
-        <SectionTitle
-          eyebrow="Relive The Energy"
-          title="Moments From Our Parties"
-          description="A look back at the nights that made Chills & Vibes what it is."
-        />
-        <div className="mt-10">
-          <Gallery images={galleryImages} />
-        </div>
-      </section>
 
+      {/* Photo Gallery */}
+
+      <section className="section-pad">
+        <section className="container-page section-pad py-16">
+          <SectionTitle
+            eyebrow="Relive The Energy"
+            title="Moments From Our Parties"
+            description="A look back at the nights that made Chills & Vibes what it is."
+          />
+          <div className="mt-10">
+            <Gallery images={galleryImages} />
+          </div>
+        </section>
+      </section>
       <section className="section-pad">
 
         <div className="container-x">
