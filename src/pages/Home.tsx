@@ -40,6 +40,9 @@ const Home = () => {
             />
           </div>
         </section>
+
+        
+        
       </>
     );
   }
@@ -177,7 +180,7 @@ const Home = () => {
       {/* Photo Gallery */}
 
       <section className="section-pad">
-        <section className="container-page section-pad py-16">
+        <section className=" container-x py-16">
           <SectionTitle
             eyebrow="Relive The Energy"
             title="Moments From Our Parties"
@@ -188,9 +191,10 @@ const Home = () => {
           </div>
         </section>
       </section>
+
       <section className="section-pad">
 
-        <div className="container-x">
+        <div className="cliveTiers.mapontainer-x">
 
           <SectionTitle
             eyebrow="What's Coming"

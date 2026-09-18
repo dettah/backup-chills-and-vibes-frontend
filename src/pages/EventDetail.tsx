@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import jerseyFlyer from "../assets/images/jersey-hero.jpg";
 import {
   HiOutlineCalendar,
   HiOutlineClock,
@@ -70,7 +70,7 @@ const EventDetail = () => {
         <div className="absolute inset-0 -z-20">
           {event.flyer ? (
             <img
-              src={event.flyer}
+              src={event.flyer || jerseyFlyer}
               alt={`${event.title} flyer`}
               className="h-full w-full object-cover object-top"
             />
