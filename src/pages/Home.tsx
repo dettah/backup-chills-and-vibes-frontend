@@ -179,7 +179,7 @@ const Home = () => {
 
       {/* Photo Gallery */}
 
-      <section className="section-pad">
+      
         <section className=" container-x py-16">
           <SectionTitle
             eyebrow="Relive The Energy"
@@ -190,11 +190,11 @@ const Home = () => {
             <Gallery images={galleryImages} />
           </div>
         </section>
-      </section>
+     
 
       <section className="section-pad">
 
-        <div className="cliveTiers.mapontainer-x">
+        <div className="container-x cliveTiers.mapontainer-x">
 
           <SectionTitle
             eyebrow="What's Coming"

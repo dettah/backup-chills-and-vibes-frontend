@@ -68,15 +68,14 @@ const EventDetail = () => {
       <section className="relative flex min-h-[60vh] items-end overflow-hidden pb-14 pt-24 sm:min-h-[70vh]">
 
         <div className="absolute inset-0 -z-20">
-          {event.flyer ? (
-            <img
-              src={event.flyer || jerseyFlyer}
-              alt={`${event.title} flyer`}
-              className="h-full w-full object-cover object-top"
-            />
-          ) : (
-            <div className="h-full w-full bg-ink-900" />
-          )}
+          <img
+            src={event.flyer || jerseyFlyer}
+            alt={`${event.title} flyer`}
+            className="h-full w-full object-cover object-top"
+            onError={(e) => {
+              e.currentTarget.src = jerseyFlyer;
+            }}
+          />
         </div>
 
 
