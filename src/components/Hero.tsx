@@ -4,7 +4,7 @@ import {
   useTransform,
 } from "framer-motion";
 
-import jerseyFlyer from "../assets/images/jersey-hero.jpg"
+import jerseyFlyer from "../assets/images/jersey-hero.avif"
 
 import {
   useRef,

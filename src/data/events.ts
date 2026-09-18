@@ -1,7 +1,7 @@
 import { ticketApi } from "../services/api";
 import type { EventItem } from "../types";
 
-import jerseyFlyer from "../assets/images/jersey-hero.jpg";
+import jerseyFlyer from "../assets/images/jersey-hero.avif";
 
 /*
  * ============================================================

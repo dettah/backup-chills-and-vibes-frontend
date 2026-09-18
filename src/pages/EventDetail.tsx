@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import jerseyFlyer from "../assets/images/jersey-hero.jpg";
+import jerseyFlyer from "../assets/images/jersey-hero.avif";
 import {
   HiOutlineCalendar,
   HiOutlineClock,

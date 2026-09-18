@@ -58,7 +58,7 @@ npm run preview
 ```
 src/
   assets/
-    images/            # logo.png, jersey-hero.jpg + placeholder images
+    images/            # logo.png, jersey-hero.avif + placeholder images
   components/           # Reusable UI building blocks
     Navbar.tsx
     Footer.tsx
@@ -150,7 +150,7 @@ Every mock integration point is marked with a `TODO(backend)` comment in the cod
 
 ## Customization
 
-- **Logo & hero image**: replace `src/assets/images/logo.png` and `src/assets/images/jersey-hero.jpg` with your own files (keep the same filenames, or update the imports in `Navbar.tsx`, `Footer.tsx`, and `data/events.ts`).
+- **Logo & hero image**: replace `src/assets/images/logo.png` and `src/assets/images/jersey-hero.avif` with your own files (keep the same filenames, or update the imports in `Navbar.tsx`, `Footer.tsx`, and `data/events.ts`).
 - **Colors**: edit the `gold`, `violet`, and `ink` values in `tailwind.config.js`.
 - **Fonts**: `Unbounded` (display) and `Plus Jakarta Sans` (body) are loaded via Google Fonts in `index.html` — swap the `<link>` and `fontFamily` config to change them.
 - **Ticket prices/tiers**: edit `src/data/tickets.ts`.

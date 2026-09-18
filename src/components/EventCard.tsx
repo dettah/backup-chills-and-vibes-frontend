@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { HiOutlineCalendar, HiOutlineClock, HiOutlineLocationMarker, HiOutlineArrowRight } from "react-icons/hi";
 import type { EventItem } from "../types";
-import jerseyFlyer from "../assets/images/jersey-hero.jpg";
+import jerseyFlyer from "../assets/images/jersey-hero.avif";
 interface EventCardProps {
   event: EventItem;
   index?: number;
