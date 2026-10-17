@@ -18,13 +18,13 @@ interface PaymentProcessOptions {
 
 
 /**
- * Secure Monnify payment lifecycle:
+ * Secure Paystack payment lifecycle:
  *
  * 1. Reserve inventory
  * 2. Create pending order
- * 3. Django initializes Monnify transaction
- * 4. Django returns Monnify checkout URL
- * 5. Browser redirects to Monnify hosted checkout
+ * 3. Django initializes Paystack transaction
+ * 4. Django returns Paystack checkout URL
+ * 5. Browser redirects to Paystack hosted checkout
  *
  * Payment verification happens separately through Django.
  */
@@ -69,7 +69,7 @@ export const executeSecurePaymentFlow =
 
 
       // =========================================================
-      // STEP 3: GET MONNIFY CHECKOUT URL
+      // STEP 3: GET PAYSTACK CHECKOUT URL
       // =========================================================
 
       const checkoutUrl =
@@ -81,20 +81,20 @@ export const executeSecurePaymentFlow =
       if (!checkoutUrl) {
 
         throw new Error(
-          "Monnify checkout URL was not returned."
+          "Paystack checkout URL was not returned."
         );
 
       }
 
 
       console.log(
-        "Redirecting to Monnify:",
+        "Redirecting to paystack:",
         checkoutUrl
       );
 
 
       // =========================================================
-      // STEP 4: REDIRECT TO MONNIFY
+      // STEP 4: REDIRECT TO Paystack
       // =========================================================
 
       window.location.assign(
@@ -106,7 +106,7 @@ export const executeSecurePaymentFlow =
     ) {
 
       console.error(
-        "Monnify checkout initialization failed:",
+        "Paystack checkout initialization failed:",
         error
       );
 

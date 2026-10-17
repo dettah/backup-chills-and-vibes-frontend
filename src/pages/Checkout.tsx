@@ -74,16 +74,16 @@ const Checkout = () => {
     setSubmitting,
   ] = useState(false);
 
-  const hasMonnifyReturn =
-    new URLSearchParams(
-      window.location.search
-    ).has("paymentReference");
+  const returnParams = new URLSearchParams(
+    window.location.search
+  );
 
-  const [
-    restoringCheckout,
-    setRestoringCheckout,
-  ] = useState(
-    hasMonnifyReturn
+  const hasPaystackReturn =
+    returnParams.has("reference") ||
+    returnParams.has("trxref");
+
+  const [restoringCheckout, setRestoringCheckout] = useState(
+    hasPaystackReturn
   );
 
   const [
@@ -125,16 +125,16 @@ const Checkout = () => {
 
   /*
    * ============================================================
-   * MONNIFY RETURN VERIFICATION
+   * PAYSTACK RETURN VERIFICATION
    * ============================================================
    *
-   * Monnify redirects the customer back to:
+   * Paystack redirects the customer back to:
    *
    * /checkout?paymentReference=ord_xxxxx
    *
    * The reference is NOT trusted by itself.
    *
-   * Django asks Monnify to verify the transaction.
+   * Django asks Paystack to verify the transaction.
    */
 
   useEffect(() => {
@@ -145,9 +145,8 @@ const Checkout = () => {
       );
 
     const returnedPaymentReference =
-      params.get(
-        "paymentReference"
-      );
+      params.get("reference") ||
+      params.get("trxref");
 
 
     /*
@@ -171,7 +170,8 @@ const Checkout = () => {
 
     /*
      * ============================================================
-     * RESTORE THE CHECKOUT THAT EXISTED BEFORE MONNIFY
+     * RESTORE THE CHECKOUT THAT EXISTED BEFORE Paystack
+     * 
      * ============================================================
      */
 
@@ -313,7 +313,7 @@ const Checkout = () => {
 
 
           console.log(
-            "Monnify returned payment reference:",
+            "Paystack returned payment reference:",
             returnedPaymentReference
           );
 
@@ -337,7 +337,7 @@ const Checkout = () => {
           ) {
 
             console.log(
-              "Monnify payment verified:",
+              "Paystack payment verified:",
               verification
             );
 
@@ -351,22 +351,13 @@ const Checkout = () => {
             );
 
 
-            /*
-             * The pending checkout has successfully
-             * become a completed order.
-             *
-             * We no longer need the temporary browser copy.
-             */
 
             sessionStorage.removeItem(
               "chills_vibes_pending_checkout"
             );
 
 
-            /*
-             * Remove Monnify query parameters.
-             */
-
+            
             window.history.replaceState(
               {},
               document.title,
@@ -398,7 +389,7 @@ const Checkout = () => {
 
 
           console.error(
-            "Monnify payment verification failed:",
+            "Paystack payment verification failed:",
             error
           );
 
@@ -530,7 +521,7 @@ const Checkout = () => {
 
 
     /*
-     * Start Monnify payment initialization.
+     * Start Paystack payment initialization.
      *
      * This creates:
      *
@@ -538,7 +529,7 @@ const Checkout = () => {
      *     ↓
      * Order(PENDING)
      *     ↓
-     * Monnify transaction
+     * Paystack transaction
      *     ↓
      * hosted checkout URL
      */
@@ -559,7 +550,7 @@ const Checkout = () => {
       quantity:
         selectedTicket.quantity,
       /*
-       * The hosted Monnify flow redirects away from
+       * The hosted Paystack flow redirects away from
        * this page, so onSuccess is not normally reached
        * during initialization.
        */
@@ -796,6 +787,5 @@ const Checkout = () => {
   );
 
 };
-
 
 export default Checkout;
